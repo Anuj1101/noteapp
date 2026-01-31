@@ -1,8 +1,10 @@
 import { useEffect,useState } from "react";
 import API from "../services/api";
+import { Link, Navigate } from "react-router-dom";
 function Notes(){
     const [notes,setNotes]=useState([]);
     const username=localStorage.getItem('username');
+    if(!username)return <Navigate to="/login" replace/>
     //starting useEffect block
     useEffect(()=>{
     const storeData=async()=>{
@@ -17,6 +19,12 @@ function Notes(){
     }
     storeData();
     },[username]);
+    //logout function
+    const handleLogout=()=>{
+        localStorage.removeItem('username');
+        <Navigate to='/login' replace/>
+    }
+    //return section
     return(
         <div>
             <h2>{username}'s notes:-</h2>
@@ -28,6 +36,7 @@ function Notes(){
                     <hr />
                 </div>
             ))}
+            <button onClick={handleLogout}>logout</button>
         </div>
     )
 }
