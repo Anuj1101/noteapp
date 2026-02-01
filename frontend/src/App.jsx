@@ -1,20 +1,21 @@
-import { useState } from 'react'
 import './App.css'
 import Login from './components/Login'
 import Register from './components/Register'
 import Notes from './components/Notes'
 import Addnote from './components/Addnote'
-import { BrowserRouter ,Route} from 'react-router-dom'
+import { BrowserRouter ,Route,Routes} from 'react-router-dom'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <BrowserRouter>
+    <Routes>
     <Route path='/' element={<Notes/>}/>
     <Route path='/login' element={<Login/>}/>
-    <Route path='/Register' element={<Register/>}/>
+    <Route path='/register' element={<Register/>}/>
+    <Route path='/notes' element={<Notes/>}/>
     <Route path='/addnote' element={<Addnote/>}/>
+    </Routes>
     </BrowserRouter>
   )
 }
