@@ -6,6 +6,7 @@ import './Notes.css'
 
 function Notes() {
   const [notes, setNotes] = useState([]);
+  const [falert,setFalert] = useState('');
   const navigate = useNavigate();
   const username = localStorage.getItem("username");
 
@@ -13,20 +14,22 @@ function Notes() {
   if (!username) {
     return <Navigate to="/login" replace />;
   }
-
+  const fetchNotes = async () => {
+    try {
+      const res = await API.get(`/notes/${username}`);
+      setNotes(res.data);
+    } catch (err) {
+      setFalert("Error fetching notes");
+      console.error(err);
+    }
+  };
+  const deleteNote=async(id)=>{
+    const res =await API.delete(`/deletenote/${id}`)
+    setFalert(res.data.message);
+  }
   useEffect(() => {
-    const fetchNotes = async () => {
-      try {
-        const res = await API.get(`/notes/${username}`);
-        setNotes(res.data);
-      } catch (err) {
-        alert("Error fetching notes");
-        console.error(err);
-      }
-    };
-
     fetchNotes();
-  }, [username]);
+  }, [username,deleteNote]);
 
   // logout
   const handleLogout = () => {
@@ -41,19 +44,21 @@ function Notes() {
       <button className="nav-btn" onClick={handleLogout}>Logout</button>
       </div>
       <div className="two-split">
-      {notes.length === 0 && <p>No notes found</p>}
-      <div className="notes">
+      {notes.length === 0 ? (<p>No notes found</p>):
+      (<div className="notes">
       {notes.map((note) => (
         <div key={note._id}>
           <h4>{note.noteTitle}</h4>
           <p>{note.noteDesc}</p>
-          <hr />
+          <button className="nav-btn" onClick={()=>deleteNote(note._id)}>delete</button>
+          <br />
         </div>
       ))}
-      </div>
+      </div>)}
 
-      <Addnote />
+      <Addnote refreshNotes={fetchNotes}/>
       </div>
+      <div>{falert}</div>
     </div>
   );
 }

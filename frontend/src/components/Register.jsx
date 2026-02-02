@@ -1,6 +1,7 @@
 import { useState } from "react";
 import API from "../services/api";
 import { useNavigate,Link } from "react-router-dom";
+import './Register.css'
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -38,9 +39,11 @@ function Register() {
   };
 
   return (
-    <div>
+    <div className="mainpage">
+      <div className="navbar">
       <h2>Register page</h2>
-
+      </div>
+      <div className="forms">
       <input
         type="text"
         placeholder="enter username"
@@ -70,7 +73,8 @@ function Register() {
       <br />
 
       <button onClick={handleRegister}>Register</button>
-      <Link to='/login'>go to login</Link>
+      <p>already have an account?<Link to='/login'>go to login</Link></p>
+    </div>
     </div>
   );
 }
