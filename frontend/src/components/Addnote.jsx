@@ -15,9 +15,11 @@ const handleSubmit=async ()=>{
     }
 }
 return(
-    <div>
+    <div className="form">
         <input type="text" placeholder="enter the note title" onChange={(e)=>{setTitle(e.target.value)}}/>
+        <br />
         <input type="text" placeholder="enter the note description" onChange={(e)=>{setDesc(e.target.value)}}/>
+        <br />
         <button onClick={handleSubmit}>submit</button>
     </div>
 )

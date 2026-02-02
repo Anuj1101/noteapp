@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import API from "../services/api";
 import { Navigate, useNavigate } from "react-router-dom";
 import Addnote from "./Addnote";
+import './Notes.css'
 
 function Notes() {
   const [notes, setNotes] = useState([]);
@@ -34,11 +35,14 @@ function Notes() {
   };
 
   return (
-    <div>
-      <h2>{username}'s notes:</h2>
-
+    <div className="mainpage">
+      <div className="navbar">
+      <h2 className="mainheading">{username}'s notes:</h2>
+      <button className="nav-btn" onClick={handleLogout}>Logout</button>
+      </div>
+      <div className="two-split">
       {notes.length === 0 && <p>No notes found</p>}
-
+      <div className="notes">
       {notes.map((note) => (
         <div key={note._id}>
           <h4>{note.noteTitle}</h4>
@@ -46,10 +50,10 @@ function Notes() {
           <hr />
         </div>
       ))}
+      </div>
 
       <Addnote />
-
-      <button onClick={handleLogout}>Logout</button>
+      </div>
     </div>
   );
 }
