@@ -1,5 +1,7 @@
 const express=require('express');
 const mongoose=require('mongoose');
+const jwt=require('jsonwebtoken');
+const bcrypt=require('bcryptjs')
 const cors=require('cors')
 const User=require('./schemas/user');
 const note=require('./schemas/note');
@@ -20,6 +22,7 @@ app.post('/register',async(req,res)=>{
     try{
     const {username,email,password} = req.body;
     if(!await User.findOne({email:email})){
+    const bpassword=bcrypt(password,)
     const user=new User({
         username:username,
         email:email,
