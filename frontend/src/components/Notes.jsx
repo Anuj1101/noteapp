@@ -8,7 +8,6 @@ function Notes() {
   const [notes, setNotes] = useState([]);
   const [falert,setFalert] = useState('');
   const navigate = useNavigate();
-  const username = localStorage.getItem("username");
 
   // redirect if not logged in
   if (!username) {
@@ -16,7 +15,7 @@ function Notes() {
   }
   const fetchNotes = async () => {
     try {
-      const res = await API.get(`/notes/${username}`);
+      const res = await API.get(`/notes`);
       setNotes(res.data);
     } catch (err) {
       setFalert("Error fetching notes");
@@ -56,7 +55,7 @@ function Notes() {
       ))}
       </div>)}
 
-      <Addnote refreshNotes={fetchNotes}/>
+      <Addnote refreshNotes={fetchNotes} newMessage={setFalert}/>
       </div>
       <div>{falert}</div>
     </div>

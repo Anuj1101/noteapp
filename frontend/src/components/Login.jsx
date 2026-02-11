@@ -19,8 +19,9 @@ function Login() {
 
     try {
       setLoading(true);
+      localStorage.removeItem('token')
       const res = await API.post("/login", { email, password });
-      localStorage.setItem("username", res.data.username);
+      localStorage.setItem("token", res.data.token);
       navigate("/notes", { replace: true });
     } catch (err) {
       setAlert(err.response?.data?.message || "Login failed");
